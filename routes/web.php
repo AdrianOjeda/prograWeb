@@ -22,3 +22,9 @@ Route::get('/test', function () {
     return view('test');
 });
 
+
+Route::post('/formularioClases', function (){
+
+    return view('formularioClases');
+
+});

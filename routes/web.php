@@ -22,3 +22,8 @@ Route::get('/test', function () {
     return view('test');
 });
 
+Route::get('/createProfesores', function(){
+
+    return view('createProfesores');
+});
+

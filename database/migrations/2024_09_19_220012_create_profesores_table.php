@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('profesores', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nombre'); // Cambiado a 'nombre'
+            $table->date('fecha'); // Agregada columna 'fecha'
+            $table->string('materia'); // Agregada columna 'materia'
             $table->timestamps();
         });
     }

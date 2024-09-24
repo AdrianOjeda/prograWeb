@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfesoresController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,8 +23,4 @@ Route::get('/test', function () {
     return view('test');
 });
 
-Route::get('/createProfesores', function(){
-
-    return view('createProfesores');
-});
-
+Route::resource('profesores', ProfesoresController::class)->parameters(['profesores' => 'profesor']);

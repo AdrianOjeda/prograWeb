@@ -13,12 +13,18 @@ return new class extends Migration
     {
         Schema::create('profesores', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre'); // Cambiado a 'nombre'
-            $table->date('fecha'); // Agregada columna 'fecha'
-            $table->string('materia'); // Agregada columna 'materia'
+            $table->string('nombre');
+            $table->string('apellido_paterno'); 
+            $table->string('apellido_materno'); 
+            $table->string('codigo')->unique(); 
+            $table->integer('edad'); 
+            $table->string('direccion'); 
+            $table->date('fecha_registro'); 
+            $table->string('materias')->nullable(); 
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.

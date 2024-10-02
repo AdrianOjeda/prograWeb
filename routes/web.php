@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FormularioClasesController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +22,8 @@ Route::get('/', function () {
 
 Route::get('/test', function () {
     return view('test');
-});
+})->middleware('auth');
+
 
 
 Route::middleware([
@@ -32,3 +35,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::resource('clases', FormularioClasesController::class)->middleware('auth');

@@ -20,46 +20,32 @@ class FormularioClasesController extends Controller
      */
     public function create()
     {
+
+        return view("create-clase");
         //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function show($id)
     {
-        //
+    // Now $clase refers to the model instance for the given ID in the URL
+        return view('show-clases');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(FormularioClases $formularioClases)
+    public function edit(FormularioClases $clase)
     {
-        //
+    // $clase will be the model instance passed to this method
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(FormularioClases $formularioClases)
+    public function update(Request $request, FormularioClases $clase)
     {
-        //
+    // $clase is the model instance you want to update
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, FormularioClases $formularioClases)
+    public function destroy(FormularioClases $clase)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(FormularioClases $formularioClases)
-    {
-        //
+    // $clase is the model instance to delete
     }
 }

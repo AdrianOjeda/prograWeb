@@ -20,10 +20,10 @@ class FormularioClasesController extends Controller
      */
     public function create()
     {
-
-        return view("create-clase");
-        //
+    // Return the form view to create a new class
+        return view('create-clases');
     }
+
 
     /**
      * Store a newly created resource in storage.

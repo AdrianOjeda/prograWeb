@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class FormularioClases extends Model
 {
     use HasFactory;
+    protected $fillable = ['class_name', 'class_code', 'class_description'];
 }

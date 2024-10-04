@@ -12,7 +12,10 @@ class FormularioClasesController extends Controller
      */
     public function index()
     {
-        //
+        $clases = FormularioClases::all();
+
+       
+        return view('index-clases', compact('clases'));
     }
 
     /**
@@ -23,6 +26,26 @@ class FormularioClasesController extends Controller
     // Return the form view to create a new class
         return view('create-clases');
     }
+    public function store(Request $request)
+    {
+    // Validate the incoming request data
+    $request->validate([
+        'class_name' => 'required|string|max:255',
+        'class_code' => 'required|string|max:100|unique:formulario_clases,class_code',
+        'class_description' => 'required|string',
+    ]);
+
+    // Create a new class
+    FormularioClases::create([
+        'class_name' => $request->input('class_name'),
+        'class_code' => $request->input('class_code'),
+        'class_description' => $request->input('class_description'),
+    ]);
+
+    // Redirect to the list of classes after successful creation
+    return redirect()->route('clases.index')->with('success', 'Class created successfully.');
+    }
+
 
 
     /**

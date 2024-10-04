@@ -35,3 +35,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route :: get( '/inicio', function( ) {
+    return view( 'inicio' );
+});

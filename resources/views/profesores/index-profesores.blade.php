@@ -24,7 +24,11 @@
             @foreach($profesores as $profesor)
                 <tr>
                     <td>{{ $profesor->id }}</td>
-                    <td>{{ $profesor->nombre }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}</td>
+                    <td>
+                        <a href="{{ route('profesores.show', $profesor) }}">
+                            {{ $profesor->nombre }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}
+                        </a>
+                    </td>
                     <td>{{ $profesor->codigo }}</td>
                     <td>
                         <ul>
@@ -36,8 +40,6 @@
                     <td>{{ $profesor->created_at->format('d/m/Y') }}</td>
                     <td>{{ $profesor->updated_at->format('d/m/Y') }}</td>
                     <td>
-                        <!-- Botón para ver detalles -->
-                        <a href="{{ route('profesores.show', $profesor) }}">Ver</a>
                         <!-- Botón para editar -->
                         <a href="{{ route('profesores.edit', $profesor) }}">Editar</a>
                         <!-- Formulario para eliminar -->

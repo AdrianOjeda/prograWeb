@@ -24,3 +24,14 @@ Route::get('/test', function () {
 });
 
 Route::resource('profesores', ProfesoresController::class)->parameters(['profesores' => 'profesor']);
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

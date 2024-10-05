@@ -1,45 +1,52 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Styles -->
+    <link href="{{ asset('Tema/Windmill/css/tailwind.output.css') }}" rel="stylesheet">
+    @livewireStyles
 
-        <!-- Styles -->
-        @livewireStyles
-    </head>
-    <body class="font-sans antialiased">
-        <x-banner />
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="font-sans antialiased">
+    <x-banner />
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+    <div class="min-h-screen bg-gray-100">
+        @livewire('navigation-menu')
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+        <!-- Page Heading -->
+        @if (isset($header))
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @endif
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+        <!-- Page Content -->
+        <main class="py-6">
+            @yield('content')  <!-- Correct use of @yield -->
+        </main>
+    </div>
 
-        @stack('modals')
+    @stack('modals')
 
-        @livewireScripts
-    </body>
+    @livewireScripts
+    <!-- Windmill JS -->
+    <script src="{{ asset('Tema/Windmill/js/init-alpine.js') }}"></script>
+    <script src="{{ asset('Tema/Windmill/js/focus-trap.js') }}"></script>
+    <script src="{{ asset('Tema/Windmill/js/charts-bars.js') }}"></script>
+    <script src="{{ asset('Tema/Windmill/js/charts-lines.js') }}"></script>
+    <script src="{{ asset('Tema/Windmill/js/charts-pie.js') }}"></script>
+</body>
 </html>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FormularioClasesController;
+use App\Http\Controllers\ProfesoresController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 

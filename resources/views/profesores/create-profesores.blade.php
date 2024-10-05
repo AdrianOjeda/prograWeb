@@ -6,6 +6,14 @@
         Agregar Profesor
     </h2>
 
+    <!-- Mostrar mensaje general de errores -->
+    @if ($errors->any())
+        <div class="px-4 py-3 mb-8 bg-red-100 border border-red-400 text-red-700 rounded-lg" role="alert">
+            <strong class="font-bold">Ups, algo salió mal!</strong>
+            <span class="block sm:inline">Por favor revisa los campos marcados e intenta de nuevo.</span>
+        </div>
+    @endif
+
     <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <form action="{{ route('profesores.store') }}" method="POST">
             @csrf
@@ -20,6 +28,9 @@
                         name="nombre"
                         value="{{ old('nombre') }}"
                         placeholder="Ingresa el nombre">
+                    @error('nombre')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
                 </label>
             </div>
 
@@ -33,6 +44,9 @@
                         name="apellido_paterno"
                         value="{{ old('apellido_paterno') }}"
                         placeholder="Ingresa el apellido paterno">
+                    @error('apellido_paterno')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
                 </label>
             </div>
 
@@ -46,6 +60,9 @@
                         name="apellido_materno"
                         value="{{ old('apellido_materno') }}"
                         placeholder="Ingresa el apellido materno">
+                    @error('apellido_materno')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
                 </label>
             </div>
 
@@ -59,6 +76,9 @@
                         name="codigo"
                         value="{{ old('codigo') }}"
                         placeholder="Ingresa el código">
+                    @error('codigo')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
                 </label>
             </div>
 
@@ -72,6 +92,9 @@
                         name="edad"
                         value="{{ old('edad') }}"
                         placeholder="Ingresa la edad">
+                    @error('edad')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
                 </label>
             </div>
 
@@ -85,6 +108,9 @@
                         name="direccion"
                         value="{{ old('direccion') }}"
                         placeholder="Ingresa la dirección">
+                    @error('direccion')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
                 </label>
             </div>
 
@@ -97,6 +123,9 @@
                         type="date"
                         name="fecha_registro"
                         value="{{ old('fecha_registro') }}">
+                    @error('fecha_registro')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
                 </label>
             </div>
 
@@ -104,27 +133,18 @@
             <div class="mb-4">
                 <span class="text-gray-700 dark:text-gray-400">Materias</span>
                 <div class="mt-2 grid grid-cols-2 gap-4">
-                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                        <input type="checkbox" name="materias[]" value="Programación" @checked(is_array(old('materias')) && in_array('Programación', old('materias'))) class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                        <span class="ml-2">Programación</span>
-                    </label>
-                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                        <input type="checkbox" name="materias[]" value="Redes de Computadoras" @checked(is_array(old('materias')) && in_array('Redes de Computadoras', old('materias'))) class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                        <span class="ml-2">Redes de Computadoras</span>
-                    </label>
-                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                        <input type="checkbox" name="materias[]" value="Sistemas Operativos" @checked(is_array(old('materias')) && in_array('Sistemas Operativos', old('materias'))) class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                        <span class="ml-2">Sistemas Operativos</span>
-                    </label>
-                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                        <input type="checkbox" name="materias[]" value="Base de Datos" @checked(is_array(old('materias')) && in_array('Base de Datos', old('materias'))) class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                        <span class="ml-2">Base de Datos</span>
-                    </label>
-                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                        <input type="checkbox" name="materias[]" value="Seguridad Informática" @checked(is_array(old('materias')) && in_array('Seguridad Informática', old('materias'))) class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                        <span class="ml-2">Seguridad Informática</span>
-                    </label>
+                    @foreach(['Programación', 'Redes de Computadoras', 'Sistemas Operativos', 'Base de Datos', 'Seguridad Informática'] as $materia)
+                        <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                            <input type="checkbox" name="materias[]" value="{{ $materia }}" 
+                                @checked(is_array(old('materias')) && in_array($materia, old('materias')))
+                                class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                            <span class="ml-2">{{ $materia }}</span>
+                        </label>
+                    @endforeach
                 </div>
+                @error('materias')
+                    <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                @enderror
             </div>
 
             <!-- Botón de Guardar -->

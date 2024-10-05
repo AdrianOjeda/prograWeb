@@ -1,54 +1,155 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar profesor</title>
-</head>
-<body>
-    <h1>Editar profesor</h1>
+@extends('layouts.windmill')
 
-    <form action="{{ route('profesores.update', $profesor) }}" method="POST">
-        @csrf
-        @method('PATCH') 
+@section('contenido')
+<div class="container px-6 mx-auto grid">
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Editar Profesor
+    </h2>
 
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" name="nombre" value="{{ old('nombre', $profesor->nombre) }}"><br><br>
+    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <form action="{{ route('profesores.update', $profesor) }}" method="POST">
+            @csrf
+            @method('PATCH')
 
-        <label for="apellido_paterno">Apellido Paterno:</label><br>
-        <input type="text" name="apellido_paterno" value="{{ old('apellido_paterno', $profesor->apellido_paterno) }}"><br><br>
+            <!-- Nombre -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Nombre</span>
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        type="text"
+                        name="nombre"
+                        value="{{ old('nombre', $profesor->nombre) }}"
+                        placeholder="Ingresa el nombre">
+                </label>
+            </div>
 
-        <label for="apellido_materno">Apellido Materno:</label><br>
-        <input type="text" name="apellido_materno" value="{{ old('apellido_materno', $profesor->apellido_materno) }}"><br><br>
+            <!-- Apellido Paterno -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Apellido Paterno</span>
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        type="text"
+                        name="apellido_paterno"
+                        value="{{ old('apellido_paterno', $profesor->apellido_paterno) }}"
+                        placeholder="Ingresa el apellido paterno">
+                </label>
+            </div>
 
-        <label for="codigo">Código:</label><br>
-        <input type="text" name="codigo" value="{{ old('codigo', $profesor->codigo) }}"><br><br>
+            <!-- Apellido Materno -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Apellido Materno</span>
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        type="text"
+                        name="apellido_materno"
+                        value="{{ old('apellido_materno', $profesor->apellido_materno) }}"
+                        placeholder="Ingresa el apellido materno">
+                </label>
+            </div>
 
-        <label for="edad">Edad:</label><br>
-        <input type="number" name="edad" value="{{ old('edad', $profesor->edad) }}"><br><br>
+            <!-- Código -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Código</span>
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        type="text"
+                        name="codigo"
+                        value="{{ old('codigo', $profesor->codigo) }}"
+                        placeholder="Ingresa el código">
+                </label>
+            </div>
 
-        <label for="direccion">Dirección:</label><br>
-        <input type="text" name="direccion" value="{{ old('direccion', $profesor->direccion) }}"><br><br>
+            <!-- Edad -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Edad</span>
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        type="number"
+                        name="edad"
+                        value="{{ old('edad', $profesor->edad) }}"
+                        placeholder="Ingresa la edad">
+                </label>
+            </div>
 
-        <label for="fecha_registro">Fecha de Registro:</label><br>
-        <input type="date" name="fecha_registro" value="{{ old('fecha_registro', $profesor->fecha_registro->format('Y-m-d')) }}"><br><br>
+            <!-- Dirección -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Dirección</span>
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        type="text"
+                        name="direccion"
+                        value="{{ old('direccion', $profesor->direccion) }}"
+                        placeholder="Ingresa la dirección">
+                </label>
+            </div>
 
-        <label for="materias">Materias:</label><br>
-        <input type="checkbox" name="materias[]" value="Programación" 
-               @checked(in_array('Programación', old('materias', explode(',', $profesor->materias))))> Programación<br>
-        <input type="checkbox" name="materias[]" value="Redes de Computadoras" 
-               @checked(in_array('Redes de Computadoras', old('materias', explode(',', $profesor->materias))))> Redes de Computadoras<br>
-        <input type="checkbox" name="materias[]" value="Sistemas Operativos" 
-               @checked(in_array('Sistemas Operativos', old('materias', explode(',', $profesor->materias))))> Sistemas Operativos<br>
-        <input type="checkbox" name="materias[]" value="Base de Datos" 
-               @checked(in_array('Base de Datos', old('materias', explode(',', $profesor->materias))))> Base de Datos<br>
-        <input type="checkbox" name="materias[]" value="Seguridad Informática" 
-               @checked(in_array('Seguridad Informática', old('materias', explode(',', $profesor->materias))))> Seguridad Informática<br>
-        <br><br>
+            <!-- Fecha de Registro -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Fecha de Registro</span>
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        type="date"
+                        name="fecha_registro"
+                        value="{{ old('fecha_registro', $profesor->fecha_registro->format('Y-m-d')) }}">
+                </label>
+            </div>
 
-        <input type="submit" value="Actualizar">
-    </form>
+            <!-- Materias -->
+            <div class="mb-4">
+                <span class="text-gray-700 dark:text-gray-400">Materias</span>
+                <div class="mt-2 grid grid-cols-2 gap-4">
+                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                        <input type="checkbox" name="materias[]" value="Programación" 
+                               @checked(in_array('Programación', old('materias', explode(',', $profesor->materias)))) 
+                               class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                        <span class="ml-2">Programación</span>
+                    </label>
+                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                        <input type="checkbox" name="materias[]" value="Redes de Computadoras" 
+                               @checked(in_array('Redes de Computadoras', old('materias', explode(',', $profesor->materias)))) 
+                               class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                        <span class="ml-2">Redes de Computadoras</span>
+                    </label>
+                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                        <input type="checkbox" name="materias[]" value="Sistemas Operativos" 
+                               @checked(in_array('Sistemas Operativos', old('materias', explode(',', $profesor->materias)))) 
+                               class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                        <span class="ml-2">Sistemas Operativos</span>
+                    </label>
+                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                        <input type="checkbox" name="materias[]" value="Base de Datos" 
+                               @checked(in_array('Base de Datos', old('materias', explode(',', $profesor->materias)))) 
+                               class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                        <span class="ml-2">Base de Datos</span>
+                    </label>
+                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                        <input type="checkbox" name="materias[]" value="Seguridad Informática" 
+                               @checked(in_array('Seguridad Informática', old('materias', explode(',', $profesor->materias)))) 
+                               class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                        <span class="ml-2">Seguridad Informática</span>
+                    </label>
+                </div>
+            </div>
 
-    <a href="{{ route('profesores.show', $profesor) }}">Volver al detalle</a>
-</body>
-</html>
+            <!-- Botón de Actualizar -->
+            <div class="flex justify-end mt-4">
+                <button type="submit" class="px-4 py-2 flex items-center text-white bg-purple-600 rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple transition-colors duration-150">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 3H3a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zM3 5h14v10H3V5z"></path>
+                    </svg>
+                    Actualizar
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <a href="{{ route('profesores.show', $profesor) }}" class="text-purple-600 hover:underline">Volver al detalle</a>
+</div>
+@endsection

@@ -1,43 +1,69 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Profesor</title>
-</head>
-<body>
-    <h1>Detalle del Profesor</h1>
+@extends('layouts.windmill')
 
-    <ul>
-        <li><strong>Nombre:</strong> {{ $profesor->nombre }}</li>
-        <li><strong>Apellido Paterno:</strong> {{ $profesor->apellido_paterno }}</li>
-        <li><strong>Apellido Materno:</strong> {{ $profesor->apellido_materno }}</li>
-        <li><strong>Código:</strong> {{ $profesor->codigo }}</li>
-        <li><strong>Edad:</strong> {{ $profesor->edad }}</li>
-        <li><strong>Dirección:</strong> {{ $profesor->direccion }}</li>
-        <li><strong>Fecha de Registro:</strong> 
-            {{ is_string($profesor->fecha_registro) ? \Carbon\Carbon::parse($profesor->fecha_registro)->format('d/m/Y') : $profesor->fecha_registro->format('d/m/Y') }}
-        </li>
-        <li><strong>Materias:</strong>
-            <ul>
-                @foreach (explode(',', $profesor->materias) as $materia)
-                    <li>{{ $materia }}</li>
+@section('contenido')
+
+<div class="container px-6 mx-auto grid">
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Detalle del Profesor
+    </h2>
+
+    <div class="grid gap-6 mb-8 md:grid-cols-2">
+        <!-- Información del Profesor -->
+        <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <h4 class="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                Información General
+            </h4>
+            <ul class="text-sm text-gray-700 dark:text-gray-400">
+                <li><strong>Nombre Completo:</strong> {{ $profesor->nombre }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}</li>
+                <li><strong>Código:</strong> {{ $profesor->codigo }}</li>
+                <li><strong>Edad:</strong> {{ $profesor->edad }}</li>
+                <li><strong>Dirección:</strong> {{ $profesor->direccion }}</li>
+                <li><strong>Fecha de Registro:</strong> {{ \Carbon\Carbon::parse($profesor->fecha_registro)->format('d/m/Y') }}</li>
+            </ul>
+        </div>
+
+        <!-- Materias que imparte -->
+        <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <h4 class="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                Materias
+            </h4>
+            <ul class="text-sm text-gray-700 dark:text-gray-400">
+                @foreach(explode(',', $profesor->materias) as $materia)
+                    <li>- {{ $materia }}</li>
                 @endforeach
             </ul>
-        </li>
-    </ul>
+        </div>
+    </div>
 
-    <!-- Botón para editar el profesor -->
-    <a href="{{ route('profesores.edit', $profesor) }}">Editar</a>
+    <!-- Botones de acción -->
+    <div class="flex space-x-4">
+        <!-- Botón para editar -->
+        <a href="{{ route('profesores.edit', $profesor) }}" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+            </svg>
+            Editar
+        </a>
 
-    <!-- Formulario para eliminar el profesor -->
-    <form action="{{ route('profesores.destroy', $profesor) }}" method="POST" style="display:inline;">
-        @csrf
-        @method('DELETE')
-        <input type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar este profesor?')">
-    </form>
+        <!-- Formulario para eliminar -->
+        <form action="{{ route('profesores.destroy', $profesor) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este profesor?')" class="flex items-center">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                Eliminar
+            </button>
+        </form>
+    </div>
 
-    <br>
-    <a href="{{ route('profesores.index') }}">Volver a la lista de profesores</a>
-</body>
-</html>
+    <!-- Volver a la lista -->
+    <div class="mt-6">
+        <a href="{{ route('profesores.index') }}" class="text-purple-600 hover:underline">
+            Volver a la lista de profesores
+        </a>
+    </div>
+</div>
+
+@endsection

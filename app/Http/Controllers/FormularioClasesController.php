@@ -23,52 +23,74 @@ class FormularioClasesController extends Controller
      */
     public function create()
     {
-    // Return the form view to create a new class
+    
         return view('create-clases');
     }
     public function store(Request $request)
     {
-    // Validate the incoming request data
+    
     $request->validate([
         'class_name' => 'required|string|max:255',
         'class_code' => 'required|string|max:100|unique:formulario_clases,class_code',
         'class_description' => 'required|string',
     ]);
 
-    // Create a new class
+    
     FormularioClases::create([
         'class_name' => $request->input('class_name'),
         'class_code' => $request->input('class_code'),
         'class_description' => $request->input('class_description'),
     ]);
 
-    // Redirect to the list of classes after successful creation
+    
     return redirect()->route('clases.index')->with('success', 'Class created successfully.');
     }
 
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function show($id)
     {
-    // Now $clase refers to the model instance for the given ID in the URL
-        return view('show-clases');
+    
+    $clase = FormularioClases::findOrFail($id);
+
+   
+        return view('show-clases', compact('clase'));
     }
 
-    public function edit(FormularioClases $clase)
+    public function edit($id)
     {
-    // $clase will be the model instance passed to this method
+        $clase = FormularioClases::findOrFail($id);
+        return view('edit-clases', compact('clase'));
     }
 
-    public function update(Request $request, FormularioClases $clase)
+
+    public function update(Request $request, $id)
     {
-    // $clase is the model instance you want to update
+        $clase = FormularioClases::findOrFail($id);
+
+    // Validate the incoming request
+        $request->validate([
+        'class_name' => 'required|string|max:255',
+        'class_code' => 'required|string|max:255',
+        'class_description' => 'required|string',
+        ]);
+
+    // Update the class with new data
+        $clase->update($request->all());
+
+        // Redirect back to the show or index page
+        return redirect()->route('clases.show', $clase->id)->with('success', 'Class updated successfully.');
     }
+
+
 
     public function destroy(FormularioClases $clase)
     {
-    // $clase is the model instance to delete
+    
+        $clase->delete();
+
+    
+        return redirect()->route('clases.index')->with('success', 'Class deleted successfully.');
     }
 }

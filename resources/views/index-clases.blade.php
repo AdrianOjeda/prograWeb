@@ -30,7 +30,7 @@
                     <td>
                         <a href="{{ route('clases.show', $clase->id) }}" class="btn btn-info">View</a>
                         <a href="{{ route('clases.edit', $clase->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('clases.destroy', $clase->id) }}" method="POST" style="display:inline-block;">
+                        <form action="{{ route('clases.destroy', $clase->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this class?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Delete</button>

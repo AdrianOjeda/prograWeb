@@ -26,7 +26,6 @@ Route::get('/test', function () {
 })->middleware('auth');
 
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

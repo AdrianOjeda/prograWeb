@@ -25,8 +25,6 @@ Route::get('/test', function () {
 })->middleware('auth');
 
 
-Route::resource('profesores', ProfesoresController::class)->parameters(['profesores' => 'profesor']);
-
 
 Route::middleware([
     'auth:sanctum',
@@ -40,7 +38,9 @@ Route::middleware([
 
 Route::resource('clases', FormularioClasesController::class)->middleware('auth');
 
-Route::resource('clases', FormularioClasesController::class)->middleware('auth');
+Route::resource('profesores', ProfesoresController::class)
+    ->parameters(['profesores' => 'profesor'])
+    ->middleware('auth');
 
 Route :: get( '/inicio', function( ) {
     return view( 'inicio' );

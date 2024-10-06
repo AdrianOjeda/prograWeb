@@ -1,49 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Class</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}"> <!-- Include your CSS if needed -->
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Create New Class</h1>
-        
-        <!-- Display any validation errors -->
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        
-        <!-- Form to create a new class -->
+@extends('layouts.windmill')
+
+@section('contenido')
+<div class="container px-6 mx-auto grid">
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Crear Clase
+    </h2>
+
+    
+    @if ($errors->any())
+        <div class="px-4 py-3 mb-8 bg-red-100 border border-red-400 text-red-700 rounded-lg" role="alert">
+            <strong class="font-bold">Ups, algo salió mal!</strong>
+            <span class="block sm:inline">Por favor revisa los campos marcados e intenta de nuevo.</span>
+        </div>
+    @endif
+
+    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <form action="{{ route('clases.store') }}" method="POST">
             @csrf
 
-            <div class="form-group">
-                <label for="class_name">Class Name</label>
-                <input type="text" name="class_name" id="class_name" class="form-control" value="{{ old('class_name') }}" required>
+            <!-- Nombre de la clase -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Nombre</span>
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        type="text"
+                        name="class_name"
+                        value="{{ old('class_name') }}"
+                        placeholder="Ingresa el nombre de la clase">
+                    @error('class_name')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
+                </label>
             </div>
 
-            <div class="form-group">
-                <label for="class_code">Class Code</label>
-                <input type="text" name="class_code" id="class_code" class="form-control" value="{{ old('class_code') }}" required>
+            <!-- Codigo de la clase -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Código de la clase</span>
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        type="text"
+                        name="class_code"
+                        value="{{ old('class_code') }}"
+                        placeholder="Ingresa el código de la clase">
+                    @error('class_code')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
+                </label>
             </div>
 
-            <div class="form-group">
-                <label for="class_description">Class Description</label>
-                <textarea name="class_description" id="class_description" class="form-control" rows="5" required>{{ old('class_description') }}</textarea>
+            <!-- Descripcion de la clase -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Descripción de la clase</span>
+                    <textarea
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        name="class_description"
+                        placeholder="Ingresa la descripción de la clase">{{ old('class_description') }}</textarea>
+                    @error('class_description')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
+                </label>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-3">Create Class</button>
+            <!-- Boton -->
+            <div class="flex justify-end mt-4">
+                <button type="submit" class="px-4 py-2 flex items-center text-white bg-purple-600 rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple transition-colors duration-150">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 3H3a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2V5a 2 2 0 00-2-2zM3 5h14v10H3V5zm3 8v2H4v-2h2zm0-4v2H4V9h2zm3 8v-2h-2v2h2zm0-4v-2H7v2h2zm3 4v-2h-2v2h2zm0-4v-2H7v2h2zm3 4v-2h-2v2h2zm0-4v-2H7v2h2z"></path>
+                    </svg>
+                    Crear
+                </button>
+            </div>
         </form>
     </div>
-
-    <script src="{{ asset('js/app.js') }}"></script> <!-- Include your JS if needed -->
-</body>
-</html>
+</div>
+@endsection

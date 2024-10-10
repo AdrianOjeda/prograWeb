@@ -12,9 +12,7 @@ class FormularioClasesController extends Controller
      */
     public function index()
     {
-        $clases = FormularioClases::all();
-
-       
+        $clases = FormularioClases::paginate(10); // Paginate results
         return view('index-clases', compact('clases'));
     }
 
@@ -23,74 +21,58 @@ class FormularioClasesController extends Controller
      */
     public function create()
     {
-    
         return view('create-clases');
     }
+
     public function store(Request $request)
-    {
-    
-    $request->validate([
+{
+    // Validate the incoming request
+    $validatedData = $request->validate([
         'class_name' => 'required|string|max:255',
         'class_code' => 'required|string|max:100|unique:formulario_clases,class_code',
         'class_description' => 'required|string',
     ]);
 
-    
-    FormularioClases::create([
-        'class_name' => $request->input('class_name'),
-        'class_code' => $request->input('class_code'),
-        'class_description' => $request->input('class_description'),
-    ]);
+    // Create a new class using the validated data
+    FormularioClases::create($validatedData);
 
-    
     return redirect()->route('clases.index')->with('success', 'Class created successfully.');
-    }
+}
 
-
-
-    
     public function show($id)
     {
-    
-    $clase = FormularioClases::findOrFail($id);
-
-   
+        $clase = FormularioClases::findOrFail($id);
         return view('show-clases', compact('clase'));
     }
 
     public function edit($id)
     {
         $clase = FormularioClases::findOrFail($id);
+        
         return view('edit-clases', compact('clase'));
     }
 
-
     public function update(Request $request, $id)
-    {
-        $clase = FormularioClases::findOrFail($id);
+{
+    $clase = FormularioClases::findOrFail($id);
 
-    // Validate the incoming request
-        $request->validate([
+    // Validate the request data
+    $request->validate([
         'class_name' => 'required|string|max:255',
         'class_code' => 'required|string|max:255',
         'class_description' => 'required|string',
-        ]);
+    ]);
 
-    // Update the class with new data
-        $clase->update($request->all());
+    // Update the class with validated data
+    $clase->update($request->only(['class_name', 'class_code', 'class_description']));
 
-        // Redirect back to the show or index page
-        return redirect()->route('clases.show', $clase->id)->with('success', 'Class updated successfully.');
-    }
-
-
+    return redirect()->route('clases.show', $clase->id)->with('success', 'Clase actualizada correctamente.');
+}
 
     public function destroy(FormularioClases $clase)
     {
-    
         $clase->delete();
 
-    
         return redirect()->route('clases.index')->with('success', 'Class deleted successfully.');
     }
 }

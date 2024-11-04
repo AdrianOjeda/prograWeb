@@ -34,14 +34,15 @@
         @endif
 
         <!-- Page Content -->
-        <main class="py-6">
-            @yield('content')  <!-- Correct use of @yield -->
+        <main>
+            @yield('content')
         </main>
     </div>
 
     @stack('modals')
 
     @livewireScripts
+
     <!-- Windmill JS -->
     <script src="{{ asset('Tema/Windmill/js/init-alpine.js') }}"></script>
     <script src="{{ asset('Tema/Windmill/js/focus-trap.js') }}"></script>

@@ -26,7 +26,6 @@ Route::get('/test', function () {
 })->middleware('auth');
 
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -40,8 +39,13 @@ Route::middleware([
 Route::resource('clases', FormularioClasesController::class)->middleware('auth');
 
 Route::resource('profesores', ProfesoresController::class)
-    ->parameters(['profesores' => 'profesor'])
-    ->middleware('auth');
+    ->parameters(['profesores' => 'profesor']);
+
+Route::middleware('auth')->group(function () {
+    Route::resource('profesores', ProfesoresController::class)
+        ->except(['index', 'show'])
+        ->parameters(['profesores' => 'profesor']);
+});
 
 Route :: get( '/inicio', function( ) {
     return view( 'inicio' );

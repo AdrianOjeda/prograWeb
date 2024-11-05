@@ -23,4 +23,11 @@ class Profesor extends Model
     protected $casts = [
         'fecha_registro' => 'datetime',
     ];    
+
+    public function clases()
+    {
+        return $this->hasMany(FormularioClases::class, 'profesor_id');
+    }
 }
+
+

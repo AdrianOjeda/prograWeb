@@ -6,7 +6,6 @@
         Crear Clase
     </h2>
 
-    
     @if ($errors->any())
         <div class="px-4 py-3 mb-8 bg-red-100 border border-red-400 text-red-700 rounded-lg" role="alert">
             <strong class="font-bold">Ups, algo salió mal!</strong>
@@ -64,6 +63,25 @@
                 </label>
             </div>
 
+            <!-- Profesor -->
+            <div class="mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Profesor</span>
+                    <select
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-select"
+                        name="profesor_id"
+                        id="profesor-dropdown">
+                        <option value="" disabled selected>Selecciona un profesor</option>
+                        @foreach ($profesores as $profesor)
+                            <option value="{{ $profesor->id }}">{{ $profesor->nombre }}</option>
+                        @endforeach
+                    </select>
+                    @error('profesor_id')
+                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+                    @enderror
+                </label>
+            </div>
+
             <!-- Boton -->
             <div class="flex justify-end mt-4">
                 <button type="submit" class="px-4 py-2 flex items-center text-white bg-purple-600 rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple transition-colors duration-150">
@@ -76,4 +94,15 @@
         </form>
     </div>
 </div>
+
+<script>
+    // Simple JavaScript search for dropdown
+    document.getElementById('profesor-dropdown').addEventListener('input', function() {
+        let input = this.value.toLowerCase();
+        Array.from(this.options).forEach(option => {
+            const isVisible = option.text.toLowerCase().includes(input);
+            option.style.display = isVisible ? 'block' : 'none';
+        });
+    });
+</script>
 @endsection

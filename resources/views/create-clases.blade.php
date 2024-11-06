@@ -96,7 +96,7 @@
 </div>
 
 <script>
-    // Simple JavaScript search for dropdown
+
     document.getElementById('profesor-dropdown').addEventListener('input', function() {
         let input = this.value.toLowerCase();
         Array.from(this.options).forEach(option => {

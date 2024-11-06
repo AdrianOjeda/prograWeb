@@ -58,9 +58,28 @@
         <span class="text-gray-700 dark:text-gray-400">Descripción de la clase</span>
         <textarea
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            name="class_description"  
-            placeholder="Ingresa la descripcion de la clase"></textarea>
-        @error('class_description')  
+            name="class_description"
+            placeholder="Ingresa la descripción de la clase">{{ old('class_description', $clase->class_description) }}</textarea>
+        @error('class_description')
+            <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
+        @enderror
+    </label>
+</div>
+
+<div class="mb-4">
+    <label class="block text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Profesor</span>
+        <select
+            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-select"
+            name="profesor_id">
+            <option value="">Selecciona un profesor</option>
+            @foreach ($profesores as $profesor)
+                <option value="{{ $profesor->id }}" {{ $clase->profesor_id == $profesor->id ? 'selected' : '' }}>
+                    {{ $profesor->nombre }}
+                </option>
+            @endforeach
+        </select>
+        @error('profesor_id')
             <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
         @enderror
     </label>

@@ -12,7 +12,9 @@
         </div>
         <div class="card-body p-4">
             <p class="text-gray-700 dark:text-gray-400"><strong>Código de la clase:</strong> {{ $clase->class_code }}</p>
+            <p class="text-gray-700 dark:text-gray-400"><strong>Profesor:</strong> {{ $clase->profesor->nombre }} {{$clase->profesor->apellido_paterno}} {{$clase->profesor->apellido_materno}}</p>
             <p class="text-gray-700 dark:text-gray-400"><strong>Descripción:</strong> {{ $clase->class_description }}</p>
+            
         </div>
     </div>
 

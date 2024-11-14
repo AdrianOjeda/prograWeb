@@ -14,4 +14,9 @@ class FormularioClases extends Model
     {
         return $this->belongsTo(Profesor::class, 'profesor_id');
     }
+
+    public function alumnos()
+    {
+        return $this->belongsToMany(Alumno::class, 'alumno_clase', 'formulario_clase_id', 'alumno_id');
+    }
 }

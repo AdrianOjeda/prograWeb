@@ -9,6 +9,8 @@ class ProfesoresController extends Controller
 {
     public function index()
     {
+
+        $this->authorize('viewAny', Profesor::class);
         $profesores = Profesor::all(); 
         return view('profesores.index-profesores', compact('profesores'));
     }

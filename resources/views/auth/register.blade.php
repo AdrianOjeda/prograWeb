@@ -29,6 +29,21 @@
                 <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>
 
+            <!-- User Type Selection -->
+            <div class="mt-4">
+                <x-label for="user_type" value="{{ __('Register as') }}" />
+                <div class="flex items-center gap-4 mt-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="user_type" value="alumni" required class="form-radio text-indigo-600">
+                        <span class="ml-2 text-sm text-gray-700">{{ __('Alumno') }}</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="user_type" value="professor" required class="form-radio text-indigo-600">
+                        <span class="ml-2 text-sm text-gray-700">{{ __('Profesor') }}</span>
+                    </label>
+                </div>
+            </div>
+
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
                     <x-label for="terms">

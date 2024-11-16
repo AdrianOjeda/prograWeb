@@ -13,6 +13,7 @@ class FormularioClasesController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', FormularioClases::class);
         $clases = FormularioClases::with('profesor')->paginate(10); // Eager load professor relationship
         return view('index-clases', compact('clases'));
     }

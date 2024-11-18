@@ -12,16 +12,11 @@ class Profesor extends Model
     protected $table = 'profesores';
     protected $fillable = [
         'nombre', 
-        'apellido_paterno', 
-        'apellido_materno',
+        'apellido',
         'codigo',
-        'edad',
-        'direccion',
-        'fecha_registro',
-        'materias'
     ];
     protected $casts = [
-        'fecha_registro' => 'datetime',
+        
     ];    
 
     public function clases()

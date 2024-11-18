@@ -14,13 +14,10 @@ return new class extends Migration
         Schema::create('profesores', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('apellido_paterno'); 
-            $table->string('apellido_materno'); 
+            $table->string('apellido'); 
+            
             $table->string('codigo')->unique(); 
-            $table->integer('edad'); 
-            $table->string('direccion'); 
-            $table->date('fecha_registro'); 
-            $table->string('materias')->nullable(); 
+            
             $table->timestamps();
         });
     }

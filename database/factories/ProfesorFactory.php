@@ -13,13 +13,9 @@ class ProfesorFactory extends Factory
     {
         return [
             'nombre' => $this->faker->firstName,
-            'apellido_paterno' => $this->faker->lastName,
-            'apellido_materno' => $this->faker->lastName,
+            'apellido' => $this->faker->lastName,
             'codigo' => $this->faker->unique()->numerify('PROF####'),
-            'edad' => $this->faker->numberBetween(25, 65),
-            'direccion' => $this->faker->address,
-            'fecha_registro' => $this->faker->dateTimeThisDecade(),
-            'materias' => $this->faker->words(3, true),
+            
         ];
     }
 }

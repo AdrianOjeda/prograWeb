@@ -9,10 +9,10 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <!-- Username -->
+            <!-- Name -->
             <div>
-                <x-label for="username" value="{{ __('Username') }}" />
-                <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="name" />
+                <x-label for="name" value="{{ __('Name') }}" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
 
             <!-- Email -->
@@ -105,8 +105,10 @@
 
             if (alumniRadio.checked || professorRadio.checked) {
                 roleFields.classList.remove('hidden');
+                document.querySelectorAll('#role_fields input').forEach(input => input.setAttribute('required', 'required'));
             } else {
                 roleFields.classList.add('hidden');
+                document.querySelectorAll('#role_fields input').forEach(input => input.removeAttribute('required'));
             }
         }
     </script>

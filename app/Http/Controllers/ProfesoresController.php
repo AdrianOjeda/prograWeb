@@ -31,14 +31,7 @@ class ProfesoresController extends Controller
                 'max:255',
                 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/', // Solo letras y espacios
             ],
-            'apellido_paterno' => [
-                'required',
-                'string',
-                'min:5',
-                'max:255',
-                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/', // Solo letras y espacios
-            ],
-            'apellido_materno' => [
+            'apellido' => [
                 'required',
                 'string',
                 'min:5',
@@ -51,10 +44,7 @@ class ProfesoresController extends Controller
                 'regex:/^[0-9]+$/', // Solo números
                 'unique:profesores,codigo', // Código único en la tabla profesores
             ],
-            'edad' => 'required|integer|min:18|max:99',
-            'direccion' => 'required|string|max:255',
-            'fecha_registro' => 'required|date',
-            'materias' => 'required|array|min:1',
+            
         ], [
             // Mensajes personalizados
             'nombre.required' => 'El campo nombre es obligatorio.',
@@ -77,13 +67,10 @@ class ProfesoresController extends Controller
         // Si la validación es correcta, crear el profesor
         Profesor::create([
             'nombre' => $request->nombre,
-            'apellido_paterno' => $request->apellido_paterno,
-            'apellido_materno' => $request->apellido_materno,
+            'apellido' => $request->apellido_paterno,
+            
             'codigo' => $request->codigo,
-            'edad' => $request->edad,
-            'direccion' => $request->direccion,
-            'fecha_registro' => $request->fecha_registro,
-            'materias' => implode(',', $request->materias),
+           
         ]);
     
         return redirect()->route('profesores.index')->with('success', 'Profesor creado correctamente.');
@@ -119,14 +106,7 @@ class ProfesoresController extends Controller
                 'max:255',
                 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/', // Solo letras y espacios
             ],
-            'apellido_paterno' => [
-                'required',
-                'string',
-                'min:5',
-                'max:255',
-                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/', // Solo letras y espacios
-            ],
-            'apellido_materno' => [
+            'apellido' => [
                 'required',
                 'string',
                 'min:5',
@@ -139,10 +119,6 @@ class ProfesoresController extends Controller
                 'regex:/^[0-9]+$/', // Solo números
                 'unique:profesores,codigo,' . $profesor->id, // Ignorar el código del profesor actual
             ],
-            'edad' => 'required|integer|min:18|max:99',
-            'direccion' => 'required|string|max:255',
-            'fecha_registro' => 'required|date',
-            'materias' => 'required|array|min:1',
         ], [
             // Mensajes personalizados
             'nombre.required' => 'El campo nombre es obligatorio.',
@@ -165,13 +141,9 @@ class ProfesoresController extends Controller
         // Si la validación es correcta, actualizar el profesor
         $profesor->update([
             'nombre' => $request->nombre,
-            'apellido_paterno' => $request->apellido_paterno,
-            'apellido_materno' => $request->apellido_materno,
+            'apellido' => $request->apellido,
             'codigo' => $request->codigo,
-            'edad' => $request->edad,
-            'direccion' => $request->direccion,
-            'fecha_registro' => $request->fecha_registro,
-            'materias' => implode(',', $request->materias),
+            
         ]);
     
         return redirect()->route('profesores.show', $profesor)->with('success', 'Profesor actualizado correctamente.');

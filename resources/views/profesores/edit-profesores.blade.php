@@ -38,34 +38,19 @@
             <!-- Apellido Paterno -->
             <div class="mb-4">
                 <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Apellido Paterno</span>
+                    <span class="text-gray-700 dark:text-gray-400">Apellido</span>
                     <input
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         type="text"
-                        name="apellido_paterno"
-                        value="{{ old('apellido_paterno', $profesor->apellido_paterno) }}"
-                        placeholder="Ingresa el apellido paterno">
-                    @error('apellido_paterno')
+                        name="apellido"
+                        value="{{ old('apellido', $profesor->apellido) }}"
+                        placeholder="Ingresa el apellido">
+                    @error('apellido')
                         <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
                     @enderror
                 </label>
             </div>
 
-            <!-- Apellido Materno -->
-            <div class="mb-4">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Apellido Materno</span>
-                    <input
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        type="text"
-                        name="apellido_materno"
-                        value="{{ old('apellido_materno', $profesor->apellido_materno) }}"
-                        placeholder="Ingresa el apellido materno">
-                    @error('apellido_materno')
-                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
-                    @enderror
-                </label>
-            </div>
 
             <!-- Código -->
             <div class="mb-4">
@@ -83,70 +68,6 @@
                 </label>
             </div>
 
-            <!-- Edad -->
-            <div class="mb-4">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Edad</span>
-                    <input
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        type="number"
-                        name="edad"
-                        value="{{ old('edad', $profesor->edad) }}"
-                        placeholder="Ingresa la edad">
-                    @error('edad')
-                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
-                    @enderror
-                </label>
-            </div>
-
-            <!-- Dirección -->
-            <div class="mb-4">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Dirección</span>
-                    <input
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        type="text"
-                        name="direccion"
-                        value="{{ old('direccion', $profesor->direccion) }}"
-                        placeholder="Ingresa la dirección">
-                    @error('direccion')
-                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
-                    @enderror
-                </label>
-            </div>
-
-            <!-- Fecha de Registro -->
-            <div class="mb-4">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Fecha de Registro</span>
-                    <input
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        type="date"
-                        name="fecha_registro"
-                        value="{{ old('fecha_registro', $profesor->fecha_registro->format('Y-m-d')) }}">
-                    @error('fecha_registro')
-                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
-                    @enderror
-                </label>
-            </div>
-
-            <!-- Materias -->
-            <div class="mb-4">
-                <span class="text-gray-700 dark:text-gray-400">Materias</span>
-                <div class="mt-2 grid grid-cols-2 gap-4">
-                    @foreach(['Programación', 'Redes de Computadoras', 'Sistemas Operativos', 'Base de Datos', 'Seguridad Informática'] as $materia)
-                        <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                            <input type="checkbox" name="materias[]" value="{{ $materia }}" 
-                                @checked(in_array($materia, old('materias', explode(',', $profesor->materias)))) 
-                                class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                            <span class="ml-2">{{ $materia }}</span>
-                        </label>
-                    @endforeach
-                </div>
-                @error('materias')
-                    <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
-                @enderror
-            </div>
 
             <!-- Botón de Actualizar -->
             <div class="flex justify-end mt-4">

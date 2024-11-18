@@ -14,10 +14,8 @@
                 Información General
             </h4>
             <ul class="text-sm text-gray-700 dark:text-gray-400">
-                <li><strong>Nombre Completo:</strong> {{ $profesor->nombre }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}</li>
+                <li><strong>Nombre Completo:</strong> {{ $profesor->nombre }} {{ $profesor->apellido }}</li>
                 <li><strong>Código:</strong> {{ $profesor->codigo }}</li>
-                <li><strong>Edad:</strong> {{ $profesor->edad }}</li>
-                <li><strong>Dirección:</strong> {{ $profesor->direccion }}</li>
                 <li><strong>Fecha de Registro:</strong> {{ \Carbon\Carbon::parse($profesor->fecha_registro)->format('d/m/Y') }}</li>
             </ul>
         </div>

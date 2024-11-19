@@ -24,10 +24,12 @@
                     aria-label="submenu"
                   >
                     
-                    <li class="flex">
-                      <a
+                  <li class="flex">
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                      @csrf
+                      <button
+                        type="submit"
                         class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                        href="#"
                       >
                         <svg
                           class="w-4 h-4 mr-3"
@@ -44,8 +46,10 @@
                           ></path>
                         </svg>
                         <span>Log out</span>
-                      </a>
-                    </li>
+                      </button>
+                    </form>
+                  </li>
+
                   </ul>
                 </template>
               </li>

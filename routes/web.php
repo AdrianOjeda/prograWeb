@@ -73,3 +73,5 @@ Route::get('/default/dashboard', function () {
 })->name('default.dashboard');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+

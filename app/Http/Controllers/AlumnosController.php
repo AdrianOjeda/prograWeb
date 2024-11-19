@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alumnos;
+use App\Models\Alumno;
 use Illuminate\Http\Request;
 
 class AlumnosController extends Controller
@@ -12,7 +12,9 @@ class AlumnosController extends Controller
      */
     public function index()
     {
-        //
+        // Fetch all alumnos.
+        $alumnos = Alumno::all();
+        return view('alumnos.index-alumnos', compact('alumnos'));
     }
 
     /**
@@ -20,7 +22,8 @@ class AlumnosController extends Controller
      */
     public function create()
     {
-        //
+        // Render the form for creating a new alumno.
+        return view('alumnos.create-alumno');
     }
 
     /**
@@ -28,38 +31,66 @@ class AlumnosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the incoming request.
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'codigo' => 'required|string|unique:alumnos,codigo|max:50',
+        ]);
+
+        // Create the alumno using the validated data.
+        Alumno::create($validated);
+
+        // Redirect back with a success message.
+        return redirect()->route('alumnos.index')->with('success', 'Alumno creado exitosamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Alumnos $alumnos)
+    public function show(Alumno $alumno)
     {
-        //
+        // Show details for a specific alumno.
+        return view('alumnos.show-alumnos', compact('alumno'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Alumnos $alumnos)
+    public function edit(Alumno $alumno)
     {
-        //
+        // Render the edit form with the alumno's data.
+        return view('alumnos.edit-alumnos', compact('alumno'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Alumnos $alumnos)
+    public function update(Request $request, Alumno $alumno)
     {
-        //
+        // Validate the incoming request.
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'codigo' => "required|string|max:50|unique:alumnos,codigo,{$alumno->id}",
+        ]);
+
+        // Update the alumno with the validated data.
+        $alumno->update($validated);
+
+        // Redirect back with a success message.
+        return redirect()->route('alumnos.index')->with('success', 'Alumno actualizado exitosamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Alumnos $alumnos)
+    public function destroy(Alumno $alumno)
     {
-        //
+        // Delete the alumno.
+        $alumno->delete();
+
+        // Redirect back with a success message.
+        return redirect()->route('alumnos.index')->with('success', 'Alumno eliminado exitosamente.');
     }
 }

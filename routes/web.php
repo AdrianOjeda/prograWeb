@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AlumnosController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\FormularioClasesController;
 use App\Http\Controllers\ProfesoresController;
 use GuzzleHttp\Middleware;
@@ -41,6 +43,8 @@ Route::resource('clases', FormularioClasesController::class)->middleware('auth')
 Route::resource('profesores', ProfesoresController::class)
     ->parameters(['profesores' => 'profesor']);
 
+Route::resource('alumnos', AlumnosController::class)->middleware('auth');
+
 Route::middleware('auth')->group(function () {
     Route::resource('profesores', ProfesoresController::class)
         ->except(['index', 'show'])
@@ -50,3 +54,22 @@ Route::middleware('auth')->group(function () {
 Route :: get( '/inicio', function( ) {
     return view( 'inicio' );
 });
+
+
+Route::get('/admin/dashboard', function () {
+    return view('dashboards.admin');
+})->name('admin.dashboard');
+
+Route::get('/profesor/dashboard', function () {
+    return view('dashboards.profesor');
+})->name('profesor.dashboard');
+
+Route::get('/alumno/dashboard', function () {
+    return view('dashboards.alumno');
+})->name('alumno.dashboard');
+
+Route::get('/default/dashboard', function () {
+    return view('dashboards.default');
+})->name('default.dashboard');
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');

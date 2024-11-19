@@ -28,14 +28,14 @@
                         <td class="px-4 py-3">{{ $profesor->id }}</td>
                         <td class="px-4 py-3">
                             <a href="{{ route('profesores.show', $profesor) }}" class="text-blue-600 hover:underline">
-                                {{ $profesor->nombre }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}
+                                {{ $profesor->nombre }} {{ $profesor->apellido }}
                             </a>
                         </td>
                         <td class="px-4 py-3">{{ $profesor->codigo }}</td>
                         <td class="px-4 py-3">
                             <ul class="list-disc list-inside">
-                                @foreach(explode(',', $profesor->materias) as $materia)
-                                    <li>{{ $materia }}</li>
+                                @foreach($profesor->clases as $clase)
+                                    <li>{{ $clase->class_name }}</li> 
                                 @endforeach
                             </ul>
                         </td>

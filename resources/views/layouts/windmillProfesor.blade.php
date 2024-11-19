@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Administrador</title>
+    <title>Profesor</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -22,11 +22,11 @@
       :class="{ 'overflow-hidden': isSideMenuOpen}"
     >
       <!-- Desktop sidebar -->
-       @include('layouts.sidebar-desktop')
+       @include('layouts.sidebar-desktop-profesor')
       
       <!-- Mobile sidebar -->
       <!-- Backdrop -->
-      @include('layouts.sidebar-mobile')
+      @include('layouts.sidebar-mobile-profesor')
       <div class="flex flex-col flex-1">
         <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
           <div
@@ -52,7 +52,7 @@
               </svg>
             </button>
             <!-- Search input -->
-            @include('layouts.search-input')
+            @include('layouts.search-input-profesor')
             <ul class="flex items-center flex-shrink-0 space-x-6">
               <!-- Theme toggler -->
               <li class="flex">

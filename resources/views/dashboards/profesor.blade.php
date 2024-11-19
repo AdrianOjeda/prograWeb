@@ -1,4 +1,4 @@
-@extends('layouts.windmill')
+@extends('layouts.windmillProfesor')
 
 @section('contenido')
 <div id="welcome-message" class="p-6 mb-4 bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 text-white rounded-lg shadow-lg">

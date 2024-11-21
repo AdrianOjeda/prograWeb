@@ -64,7 +64,8 @@ Route::get('/profesor/dashboard', function () {
     return view('dashboards.profesor');
 })->name('profesor.dashboard');
 
-Route::get('/alumno/{alumno}/dashboard', [AlumnosController::class, 'dashboard'])->name('alumno.dashboard');
+Route::get('/alumno/dashboard', [AlumnosController::class, 'dashboard'])->name('alumno.dashboard');
+
 
 Route::get('/default/dashboard', function () {
     return view('dashboards.default');

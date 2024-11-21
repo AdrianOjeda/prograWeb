@@ -10,15 +10,33 @@ use App\Models\FormularioClases;
 class AlumnosController extends Controller
 {
 
-    public function dashboard(Alumno $alumno)
+    public function dashboard()
     {
-        // Fetch registered classes
+        // Check if the user is authenticated
+        $user = Auth::user();
+
+        if (!$user) {
+            // Handle the case where the user is not authenticated, e.g., redirect to login
+            return redirect()->route('login');
+        }
+
+        // Fetch the alumno associated with this user
+        $alumno = $user->alumno; // Ensure that the user has an associated alumno
+        
+        // If there's no alumno associated with the user, handle the case gracefully
+        if (!$alumno) {
+            // Handle the case where there's no alumno found, you can redirect or show a message
+            return redirect()->route('some.other.route')->with('error', 'Alumno not found.');
+        }
+
+        // Fetch the classes the alumno is already registered in
         $registeredClasses = $alumno->clases()->pluck('formulario_clases.id');
 
-        // Fetch unregistered classes
+        // Fetch the classes the alumno is NOT registered in
         $unregisteredClasses = FormularioClases::whereNotIn('id', $registeredClasses)->get();
 
-        return view('alumnos.dashboard', compact('unregisteredClasses', 'alumno'));
+        // Return the view with the necessary data
+        return view('dashboards.alumno', compact('unregisteredClasses', 'alumno'));
     }
 
     

@@ -44,6 +44,7 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'user_type' => $input['user_type'], 
+            
         ]);
 
         
@@ -52,12 +53,14 @@ class CreateNewUser implements CreatesNewUsers
                 'nombre' => $input['role_name'],
                 'apellido' => $input['role_lastname'],
                 'codigo' => $input['role_code'],
+                //'user_id' => $user->id,  // Associate the user_id with the professor
             ]);
         } elseif ($input['user_type'] === 'alumni') {
             Alumno::create([
                 'nombre' => $input['role_name'],
                 'apellido' => $input['role_lastname'],
                 'codigo' => $input['role_code'],
+                'user_id' => $user->id,  
             ]);
         }
 

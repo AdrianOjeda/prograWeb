@@ -13,7 +13,11 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('apellido');
             $table->string('codigo')->unique();
+            $table->unsignedBigInteger('user_id')->unique(); // Add the user_id column as a foreign key
             $table->timestamps();
+
+            // Define the foreign key constraint
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

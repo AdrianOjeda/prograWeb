@@ -73,6 +73,10 @@ Route::get('/default/dashboard', function () {
 
 Route::post('/alumno/register-class/{id}', [AlumnosController::class, 'registerClass'])->name('alumno.registerClass');
 
+Route::get('/alumno/mis-clases', [AlumnosController::class, 'misClases'])->name('alumno.misClases');
+Route::post('/alumno/clases/{classId}/unregister', [AlumnosController::class, 'unregisterClass'])->name('alumno.unregisterClass');
+
+
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 

@@ -60,6 +60,44 @@ class AlumnosController extends Controller
         return redirect()->route('dashboard')->with('success', 'Te has registrado en la clase con éxito.');
     }
 
+    public function misClases()
+    {
+        $user = Auth::user();
+        $alumno = $user->alumno;
+
+        if (!$alumno) {
+            return redirect()->route('login')->with('error', 'Alumno no encontrado.');
+        }
+
+        $registeredClasses = $alumno->clases;
+
+        return view('alumnos.mis-clases', compact('registeredClasses'));
+    }
+
+    public function unregisterClass(Request $request, $classId)
+    {
+        $user = Auth::user();
+        $alumno = $user->alumno;
+
+        if (!$alumno) {
+            return redirect()->route('login')->with('error', 'Alumno no encontrado.');
+        }
+
+       
+        $class = $alumno->clases()->find($classId);
+
+        if (!$class) {
+            return redirect()->route('alumno.misClases')->with('error', 'Clase no encontrada o no está registrado.');
+        }
+
+        
+        $alumno->clases()->detach($classId);
+
+        return redirect()->route('alumno.misClases')->with('success', 'Te has dado de baja de la clase exitosamente.');
+    }
+
+
+
 
 
     

@@ -4,12 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Alumno;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\FormularioClases;
 
 class AlumnosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function dashboard(Alumno $alumno)
+    {
+        // Fetch registered classes
+        $registeredClasses = $alumno->clases()->pluck('formulario_clases.id');
+
+        // Fetch unregistered classes
+        $unregisteredClasses = FormularioClases::whereNotIn('id', $registeredClasses)->get();
+
+        return view('alumnos.dashboard', compact('unregisteredClasses', 'alumno'));
+    }
+
+    
     public function index()
     {
         // Fetch all alumnos.

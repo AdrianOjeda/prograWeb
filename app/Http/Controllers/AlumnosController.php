@@ -6,6 +6,8 @@ use App\Models\Alumno;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FormularioClases;
+use App\Mail\ClaseRegistrationMail;
+use Illuminate\Support\Facades\Mail;
 
 class AlumnosController extends Controller
 {
@@ -56,7 +58,7 @@ class AlumnosController extends Controller
 
         
         $alumno->clases()->attach($class->id);
-
+        Mail::to($user->email)->send(new ClaseRegistrationMail($alumno, $class));
         return redirect()->route('dashboard')->with('success', 'Te has registrado en la clase con éxito.');
     }
 

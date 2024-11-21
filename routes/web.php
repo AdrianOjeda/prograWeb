@@ -71,6 +71,9 @@ Route::get('/default/dashboard', function () {
     return view('dashboards.default');
 })->name('default.dashboard');
 
+Route::post('/alumno/register-class/{id}', [AlumnosController::class, 'registerClass'])->name('alumno.registerClass');
+
+
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 

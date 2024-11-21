@@ -12,32 +12,55 @@ class AlumnosController extends Controller
 
     public function dashboard()
     {
-        // Check if the user is authenticated
+        
         $user = Auth::user();
-
+        
         if (!$user) {
-            // Handle the case where the user is not authenticated, e.g., redirect to login
+           
             return redirect()->route('login');
         }
 
         // Fetch the alumno associated with this user
-        $alumno = $user->alumno; // Ensure that the user has an associated alumno
+        $alumno = $user->alumno;
         
-        // If there's no alumno associated with the user, handle the case gracefully
         if (!$alumno) {
-            // Handle the case where there's no alumno found, you can redirect or show a message
+           
             return redirect()->route('some.other.route')->with('error', 'Alumno not found.');
         }
 
-        // Fetch the classes the alumno is already registered in
         $registeredClasses = $alumno->clases()->pluck('formulario_clases.id');
 
-        // Fetch the classes the alumno is NOT registered in
-        $unregisteredClasses = FormularioClases::whereNotIn('id', $registeredClasses)->get();
+        // Fetch the classes the alumno is NOT registered in, including the professor
+        $unregisteredClasses = FormularioClases::whereNotIn('id', $registeredClasses)
+            ->with('profesor') 
+            ->get();
 
-        // Return the view with the necessary data
         return view('dashboards.alumno', compact('unregisteredClasses', 'alumno'));
     }
+
+    public function registerClass($id)
+    {
+        $user = Auth::user();
+        $alumno = $user->alumno;
+
+        if (!$alumno) {
+            return redirect()->route('dashboard')->with('error', 'Alumno not found.');
+        }
+
+        
+        $class = FormularioClases::find($id);
+
+        if (!$class) {
+            return redirect()->route('dashboard')->with('error', 'Clase no encontrada.');
+        }
+
+        
+        $alumno->clases()->attach($class->id);
+
+        return redirect()->route('dashboard')->with('success', 'Te has registrado en la clase con éxito.');
+    }
+
+
 
     
     public function index()
@@ -52,7 +75,7 @@ class AlumnosController extends Controller
      */
     public function create()
     {
-        // Render the form for creating a new alumno.
+       
         return view('alumnos.create-alumno');
     }
 
@@ -61,17 +84,17 @@ class AlumnosController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming request.
+        
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'codigo' => 'required|string|unique:alumnos,codigo|max:50',
         ]);
 
-        // Create the alumno using the validated data.
+
         Alumno::create($validated);
 
-        // Redirect back with a success message.
+        
         return redirect()->route('alumnos.index')->with('success', 'Alumno creado exitosamente.');
     }
 
@@ -80,7 +103,7 @@ class AlumnosController extends Controller
      */
     public function show(Alumno $alumno)
     {
-        // Show details for a specific alumno.
+       
         return view('alumnos.show-alumnos', compact('alumno'));
     }
 
@@ -89,7 +112,7 @@ class AlumnosController extends Controller
      */
     public function edit(Alumno $alumno)
     {
-        // Render the edit form with the alumno's data.
+        
         return view('alumnos.edit-alumnos', compact('alumno'));
     }
 
@@ -108,7 +131,7 @@ class AlumnosController extends Controller
         // Update the alumno with the validated data.
         $alumno->update($validated);
 
-        // Redirect back with a success message.
+        
         return redirect()->route('alumnos.index')->with('success', 'Alumno actualizado exitosamente.');
     }
 
@@ -119,8 +142,6 @@ class AlumnosController extends Controller
     {
         // Delete the alumno.
         $alumno->delete();
-
-        // Redirect back with a success message.
         return redirect()->route('alumnos.index')->with('success', 'Alumno eliminado exitosamente.');
     }
 }

@@ -76,7 +76,7 @@ Route::post('/alumno/register-class/{id}', [AlumnosController::class, 'registerC
 Route::get('/alumno/mis-clases', [AlumnosController::class, 'misClases'])->name('alumno.misClases');
 Route::post('/alumno/clases/{classId}/unregister', [AlumnosController::class, 'unregisterClass'])->name('alumno.unregisterClass');
 
-
+Route::get('/profesor/mis-clases', [ProfesoresController::class, 'misClases'])->name('profesor.misClases');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 

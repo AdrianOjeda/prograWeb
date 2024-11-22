@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Profesor; 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfesoresController extends Controller
 {
@@ -13,6 +14,20 @@ class ProfesoresController extends Controller
         $this->authorize('viewAny', Profesor::class);
         $profesores = Profesor::all(); 
         return view('profesores.index-profesores', compact('profesores'));
+    }
+
+    public function misClases()
+    {
+        $user = Auth::user();
+        $profesor = $user->profesor;
+
+        if (!$profesor) {
+            return redirect()->route('login')->with('error', 'Profesor no encontrado.');
+        }
+
+        $registeredClasses = $profesor->clases;
+
+        return view('profesores.mis-clases', compact('registeredClasses'));
     }
 
     public function create()

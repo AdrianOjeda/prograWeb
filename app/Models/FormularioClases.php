@@ -19,4 +19,9 @@ class FormularioClases extends Model
     {
         return $this->belongsToMany(Alumno::class, 'alumno_clase', 'formulario_clase_id', 'alumno_id');
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'class_id');
+    }
 }

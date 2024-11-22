@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profesor; 
+use App\Models\FormularioClases;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -95,21 +96,23 @@ class ProfesoresController extends Controller
     {
         $user = Auth::user();
         $profesor = $user->profesor;
-
+    
         if (!$profesor) {
             return redirect()->route('login')->with('error', 'Profesor no encontrado.');
         }
-
-        
-        $clase = $profesor->clases()->where('id', $id)->first();
-
-        if (!$clase) {
-            return redirect()->route('profesores.mis-clases')->with('error', 'Clase no encontrada o no autorizada.');
-        }
-
-        $studentCount = $clase->alumnos()->count(); // Assuming a relationship with students
-        return view('profesores.detalle-clase', compact('clase', 'studentCount'));
+    
+        $clase = FormularioClases::with(['posts' => function ($query) use ($profesor) {
+            $query->where('profesor_id', $profesor->id);
+        }])->findOrFail($id);
+    
+        $studentCount = $clase->alumnos()->count(); // Assuming a many-to-many relation with Alumno
+    
+        $posts = $clase->posts; // Fetch the professor's posts for this class
+    
+        return view('profesores.detalle-clase', compact('clase', 'studentCount', 'posts'));
     }
+    
+
 
     
     /**

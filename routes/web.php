@@ -6,6 +6,7 @@ use App\Http\Controllers\FormularioClasesController;
 use App\Http\Controllers\ProfesoresController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,3 +82,9 @@ Route::get('/profesor/mis-clases', [ProfesoresController::class, 'misClases'])->
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::get('/profesor/clases/{id}', [ProfesoresController::class, 'detalleClase'])->name('profesor.detalleClase');
+
+Route::get('/clases/{id}/posts/create', [PostController::class, 'create'])->name('posts.create');
+
+Route::get('/clases/{id}/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/clases/{id}/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::post('/clases/{id}/posts', [PostController::class, 'store'])->name('posts.store');

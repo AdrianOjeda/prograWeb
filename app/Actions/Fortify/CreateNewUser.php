@@ -53,7 +53,7 @@ class CreateNewUser implements CreatesNewUsers
                 'nombre' => $input['role_name'],
                 'apellido' => $input['role_lastname'],
                 'codigo' => $input['role_code'],
-                //'user_id' => $user->id,  // Associate the user_id with the professor
+                'user_id' => $user->id,  // Associate the user_id with the professor
             ]);
         } elseif ($input['user_type'] === 'alumni') {
             Alumno::create([

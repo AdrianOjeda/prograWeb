@@ -14,6 +14,7 @@ class Profesor extends Model
         'nombre', 
         'apellido',
         'codigo',
+        'user_id',
     ];
     protected $casts = [
         
@@ -22,6 +23,11 @@ class Profesor extends Model
     public function clases()
     {
         return $this->hasMany(FormularioClases::class, 'profesor_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
 

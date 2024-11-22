@@ -80,4 +80,4 @@ Route::get('/profesor/mis-clases', [ProfesoresController::class, 'misClases'])->
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-
+Route::get('/profesor/clases/{id}', [ProfesoresController::class, 'detalleClase'])->name('profesor.detalleClase');

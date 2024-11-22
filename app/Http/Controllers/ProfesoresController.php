@@ -90,6 +90,27 @@ class ProfesoresController extends Controller
     
         return redirect()->route('profesores.index')->with('success', 'Profesor creado correctamente.');
     }
+
+    public function detalleClase($id)
+    {
+        $user = Auth::user();
+        $profesor = $user->profesor;
+
+        if (!$profesor) {
+            return redirect()->route('login')->with('error', 'Profesor no encontrado.');
+        }
+
+        
+        $clase = $profesor->clases()->where('id', $id)->first();
+
+        if (!$clase) {
+            return redirect()->route('profesores.mis-clases')->with('error', 'Clase no encontrada o no autorizada.');
+        }
+
+        $studentCount = $clase->alumnos()->count(); // Assuming a relationship with students
+        return view('profesores.detalle-clase', compact('clase', 'studentCount'));
+    }
+
     
     /**
      * Display the specified resource.

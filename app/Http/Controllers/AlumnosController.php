@@ -45,6 +45,19 @@ class AlumnosController extends Controller
         $clase = FormularioClases::findOrFail($id); 
         return view('alumnos.class-details', compact('clase'));
     }
+    public function search(Request $request)
+    { 
+        $query = $request->input('query');
+
+         
+        $searchResults = FormularioClases::where('class_name', 'LIKE', '%' . $query . '%')
+            ->orWhere('class_description', 'LIKE', '%' . $query . '%')
+            ->with('profesor')  
+            ->get();
+
+         
+        return view('alumnos.search-results', compact('searchResults', 'query'));
+    }
 
     public function registerClass($id)
     {

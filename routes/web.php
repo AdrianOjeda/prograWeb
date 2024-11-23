@@ -89,6 +89,6 @@ Route::get('/clases/{id}/posts', [PostController::class, 'index'])->name('posts.
 Route::get('/clases/{id}/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::post('/clases/{id}/posts', [PostController::class, 'storePost'])->name('posts.store');
 Route::get('/mis-clases/{id}', [AlumnosController::class, 'showClassDetails'])->name('alumno.classDetails');
-
+Route::get('/alumno/search', [AlumnosController::class, 'search'])->name('alumno.search');
 
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');

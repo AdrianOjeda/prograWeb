@@ -6,7 +6,12 @@
     <ul class="mt-4 space-y-4">
         @forelse($registeredClasses as $clase)
             <li class="p-4 bg-gray-100 rounded-lg shadow-md">
-                <h4 class="text-xl font-bold">{{ $clase->class_name }}</h4>
+                <h4 class="text-xl font-bold">
+                    <!-- Add a link to the class details page -->
+                    <a href="{{ route('alumno.classDetails', $clase->id) }}" class="text-purple-600 hover:text-purple-800">
+                        {{ $clase->class_name }}
+                    </a>
+                </h4>
                 <p class="text-gray-700">{{ $clase->class_description }}</p>
                 <p class="text-gray-700">
                     Impartida por: 

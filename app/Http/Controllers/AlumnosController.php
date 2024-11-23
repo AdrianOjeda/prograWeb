@@ -40,6 +40,12 @@ class AlumnosController extends Controller
         return view('dashboards.alumno', compact('unregisteredClasses', 'alumno'));
     }
 
+    public function showClassDetails($id)
+    {
+        $clase = FormularioClases::findOrFail($id); 
+        return view('alumnos.class-details', compact('clase'));
+    }
+
     public function registerClass($id)
     {
         $user = Auth::user();

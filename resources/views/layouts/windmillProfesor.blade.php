@@ -29,9 +29,8 @@
       @include('layouts.sidebar-mobile-profesor')
       <div class="flex flex-col flex-1">
         <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-          <div
-            class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
-          >
+        <div class="container flex items-center justify-end h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+
             <!-- Mobile hamburger -->
             <button
               class="p-1 -ml-1 mr-5 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
@@ -52,7 +51,7 @@
               </svg>
             </button>
             <!-- Search input -->
-            @include('layouts.search-input-profesor')
+            
             <ul class="flex items-center flex-shrink-0 space-x-6">
               <!-- Theme toggler -->
               <li class="flex">

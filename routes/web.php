@@ -87,4 +87,6 @@ Route::get('/clases/{id}/posts/create', [PostController::class, 'create'])->name
 
 Route::get('/clases/{id}/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/clases/{id}/posts/create', [PostController::class, 'create'])->name('posts.create');
-Route::post('/clases/{id}/posts', [PostController::class, 'store'])->name('posts.store');
+Route::post('/clases/{id}/posts', [PostController::class, 'storePost'])->name('posts.store');
+
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');

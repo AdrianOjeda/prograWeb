@@ -14,6 +14,7 @@ class Post extends Model
         'profesor_id',
         'title',
         'content',
+        'file_path',
     ];
 
     

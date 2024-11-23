@@ -20,7 +20,25 @@
                 <li class="p-4 bg-gray-100 rounded-lg shadow-md">
                     <h4 class="text-xl font-bold">{{ $post->title }}</h4>
                     <p class="text-gray-700">{{ $post->content }}</p>
+                    @if($post->file_path)
+                        <p class="text-gray-700">
+                            <strong>Archivo:</strong>
+                            <a href="{{ Storage::url($post->file_path) }}" class="text-blue-500 hover:underline" target="_blank">
+                                Descargar archivo
+                            </a>
+                        </p>
+                    @endif
                     <p class="text-sm text-gray-500">Publicado: {{ $post->created_at->format('d/m/Y H:i') }}</p>
+                    
+                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="mt-4">
+                        @csrf
+                        @method('DELETE')
+                        <button 
+                            type="submit" 
+                            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                            Eliminar Post
+                        </button>
+                    </form>
                 </li>
             @empty
                 <p class="font-semibold text-purple-600">Aún no has creado posts para esta clase.</p>

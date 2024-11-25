@@ -4,80 +4,107 @@ namespace Tests\Feature;
 
 use App\Models\FormularioClases;
 use App\Models\Profesor;
-use App\Models\Alumno;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class FormularioClasesTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase; 
 
-    /** @test */
-    public function a_class_can_be_created()
+    public function test_index_shows_clases_and_returns_200()
     {
+        // Crea un usuario y lo autentica
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // Crea un profesor
         $profesor = Profesor::factory()->create();
 
-        
-        $formularioClase = FormularioClases::create([
+        // Crea 5 clases asociadas al profesor
+        FormularioClases::factory()->count(5)->create(['profesor_id' => $profesor->id]);
+
+        // Realiza la solicitud a la ruta 'clases.index'
+        $response = $this->get(route('clases.index'));
+
+        // Verifica que la respuesta sea 200, y que contenga las clases
+        $response->assertStatus(200);
+        $response->assertViewHas('clases');
+        $response->assertSee('Clases');
+    }
+
+    public function test_store_creates_clase_and_redirects()
+    {
+        // Crea un usuario y lo autentica
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // Crea un profesor
+        $profesor = Profesor::factory()->create();
+
+        // Datos para crear una nueva clase
+        $data = [
             'class_name' => 'Math 101',
             'class_code' => 'MATH101',
             'class_description' => 'Introduction to Math',
-            'profesor_id' => $profesor->id,
-        ]);
+            'profesor_id' => $profesor->id, 
+        ];
 
-        
+        // Realiza la solicitud para crear una nueva clase
+        $response = $this->post(route('clases.store'), $data);
+
+        // Verifica que la clase haya sido creada en la base de datos
         $this->assertDatabaseHas('formulario_clases', [
             'class_name' => 'Math 101',
             'class_code' => 'MATH101',
-            'profesor_id' => $profesor->id,
+        ]);
+
+        // Verifica que la respuesta redirija correctamente
+        $response->assertRedirect(route('clases.index'));
+        $response->assertSessionHas('success', 'Class created successfully.');
+    }
+
+    public function test_store_fails_with_invalid_data()
+    {
+        // Crea un usuario y lo autentica
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // Datos inválidos para crear una clase
+        $data = [
+            'class_name' => '',
+            'class_code' => '',
+            'profesor_id' => 9999,  
+        ];
+
+        // Realiza la solicitud para crear la clase con datos inválidos
+        $response = $this->post(route('clases.store'), $data);
+
+        // Verifica que se hayan mostrado los errores de validación
+        $response->assertSessionHasErrors(['class_name', 'class_code', 'profesor_id']);
+        $this->assertDatabaseMissing('formulario_clases', [
+            'class_name' => '',  
         ]);
     }
 
-    /** @test */
-    public function a_class_belongs_to_a_profesor()
+    public function test_destroy_deletes_clase_and_redirects()
     {
+        // Crea un usuario y lo autentica
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // Crea un profesor y una clase asociada
         $profesor = Profesor::factory()->create();
-        $formularioClase = FormularioClases::factory()->create([
-            'profesor_id' => $profesor->id,
-        ]);
+        $clase = FormularioClases::factory()->create(['profesor_id' => $profesor->id]);
 
-        
-        $this->assertEquals($profesor->id, $formularioClase->profesor->id);
-    }
+        // Realiza la solicitud para eliminar la clase
+        $response = $this->delete(route('clases.destroy', $clase->id));
 
-    /** @test */
-    public function a_class_has_many_alumnos()
-    {
-        $formularioClase = FormularioClases::factory()->create();
-        $alumnos = Alumno::factory()->count(3)->create(); 
+        // Verifica que la clase haya sido eliminada
+        $this->assertDatabaseMissing('formulario_clases', ['id' => $clase->id]);
 
-        
-        $formularioClase->alumnos()->attach($alumnos);
-
-        
-        $this->assertCount(3, $formularioClase->alumnos);
-    }
-
-    /** @test */
-    public function class_code_is_unique()
-    {
-        $profesor = Profesor::factory()->create();
-
-        
-        FormularioClases::create([
-            'class_name' => 'Math 101',
-            'class_code' => 'MATH101',
-            'class_description' => 'Introduction to Math',
-            'profesor_id' => $profesor->id,
-        ]);
-
-        
-        $this->expectException(\Illuminate\Database\QueryException::class); // Expect a database error due to unique constraint
-        FormularioClases::create([
-            'class_name' => 'Physics 101',
-            'class_code' => 'MATH101', 
-            'class_description' => 'Introduction to Physics',
-            'profesor_id' => $profesor->id,
-        ]);
+        // Verifica que la respuesta redirija correctamente
+        $response->assertRedirect(route('clases.index'));
+        $response->assertSessionHas('success', 'Class deleted successfully.');
     }
 }

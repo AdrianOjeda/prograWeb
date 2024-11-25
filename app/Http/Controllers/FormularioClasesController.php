@@ -14,7 +14,7 @@ class FormularioClasesController extends Controller
     public function index()
     {
         $this->authorize('viewAny', FormularioClases::class);
-        $clases = FormularioClases::with('profesor')->paginate(10); // Eager load professor relationship
+        $clases = FormularioClases::with('profesor')->paginate(10); 
         return view('index-clases', compact('clases'));
     }
 
@@ -32,15 +32,15 @@ class FormularioClasesController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming request
+       
         $validatedData = $request->validate([
             'class_name' => 'required|string|max:255',
             'class_code' => 'required|string|max:100|unique:formulario_clases,class_code',
             'class_description' => 'required|string',
-            'profesor_id' => 'required|exists:profesores,id', // Validate professor ID
+            'profesor_id' => 'required|exists:profesores,id', 
         ]);
 
-        // Create a new class with the validated data
+      
         FormularioClases::create($validatedData);
 
         return redirect()->route('clases.index')->with('success', 'Class created successfully.');
@@ -51,7 +51,7 @@ class FormularioClasesController extends Controller
      */
     public function show($id)
     {
-        $clase = FormularioClases::with('profesor')->findOrFail($id); // Eager load professor relationship
+        $clase = FormularioClases::with('profesor')->findOrFail($id);
         return view('show-clases', compact('clase'));
     }
 
@@ -61,7 +61,7 @@ class FormularioClasesController extends Controller
     public function edit($id)
     {
         $clase = FormularioClases::findOrFail($id);
-        $profesores = Profesor::all(); // Fetch all professors for selection
+        $profesores = Profesor::all(); 
 
         return view('edit-clases', compact('clase', 'profesores'));
     }
@@ -78,10 +78,10 @@ class FormularioClasesController extends Controller
             'class_name' => 'required|string|max:255',
             'class_code' => 'required|string|max:100|unique:formulario_clases,class_code,' . $id,
             'class_description' => 'required|string',
-            'profesor_id' => 'required|exists:profesores,id', // Validate professor ID
+            'profesor_id' => 'required|exists:profesores,id', 
         ]);
 
-        // Update the class with validated data
+        
         $clase->update($validatedData);
 
         return redirect()->route('clases.show', $clase->id)->with('success', 'Class updated successfully.');
